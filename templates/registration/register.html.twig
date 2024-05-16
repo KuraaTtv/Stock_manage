@@ -3,17 +3,72 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="bg-light py-3 py-md-5">
+    <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
+        <div class="bg-white p-4 p-md-5 rounded shadow-sm">
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-5">
+              <h3 class="fw-bold text-uppercase fs-1">Register</h3>
+              </div>
+            </div>
+          </div>
+          <div class="row gy-3 gy-md-4 overflow-hidden">
+              <div class="col-12">
+              {{ form_errors(registrationForm) }}
 
-    {{ form_errors(registrationForm) }}
+              {{ form_start(registrationForm) }}
+             
+              {{ form_row(registrationForm.email, {
+                'attr': {'class': 'form-control'},
+                'label': 'email',
+                'label_attr': {'class': 'text-uppercase fs-6'}
+            }) }}
+            
+               {{ form_row(registrationForm.plainPassword, {
+                'attr': {'class': 'form-control password-field'},
+                'label': 'Password',
+                'label_attr': {'class': 'text-uppercase fs-6'}
+            }) }}
+            
+            <div class="form-check mt-2">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onclick="ShowPass()">
+                <label class="form-check-label text-uppercase" for="flexCheckDefault">
+                  Show Password
+                </label>
+              </div>
+              <script>
+                let id_pass = document.querySelector('.password-field');
+                function ShowPass(){
+                    if(id_pass.type ==="password"){
+                        id_pass.type = "text";
+                    }
+                    else{
+                        id_pass.type = "password"
+                    }
+                }
+              </script>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            
+            {{ form_row(registrationForm.agreeTerms, {
+                'attr': {'class': 'form-check-input'},
+                'label': 'Agree Terms',
+                'label_attr': {'class': 'text-uppercase fs-6 '}
+            }) }}
+            
+            {{ form_row(registrationForm._token) }}
+            
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="d-grid">
+          <button class="btn btn-lg btn-primary" type="submit">Register</button>
+        </div>
+      </div>
+      <div class="col-12 mt-2">
+        <p class="m-0 text-secondary text-center">You have an account? <a href="/login" class="link-primary text-decoration-none">Login Here</a></p>
+      </div>
+        </div>
 {% endblock %}
