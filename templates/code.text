@@ -1,0 +1,509 @@
+<body>
+    <!--Start Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <div class="dropdown">
+        </div>
+        <!-- Avatar -->
+        <div class="dropdown">
+          <a
+            data-mdb-dropdown-init
+            class="dropdown-toggle d-flex align-items-center hidden-arrow"
+            href="#"
+            id="navbarDropdownMenuAvatar"
+            role="button"
+            aria-expanded="false"
+          >
+            <img
+              src="{{asset('image/user.png')}}"
+              class="rounded-circle  fs-1"
+              height="45"
+              alt="Black and White Portrait of a Man"
+              loading="lazy"
+            />
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdownMenuAvatar"
+          >
+            <li>
+              <a class="dropdown-item fs-5" href="#">
+                {% if is_granted('ROLE_ADMIN') %}
+                        <span class="fw-bold">Admin</span>
+                        {% elseif is_granted('ROLE_USER') %}
+                        <!-- <span class="user-status">
+                            <i class="fa fa-circle text-success"></i>
+                        </span> -->
+                        <span class="fw-bold">User</span>
+                        <span>Online</span>
+                        {% endif %}
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item fw-bold fs-5" href="#">Profile</a>
+            </li>
+            <hr/>
+            <li>
+              <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Right elements -->
+    </div>
+    <!-- Container wrapper -->
+  </nav>
+
+  <!--End Navbar -->
+
+  <!-- Sidebar start -->
+  {% if is_granted('ROLE_ADMIN') %}
+  <div class="page-wrapper chiller-theme toggled">
+    <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+        <i class="fas fa-bars"></i>
+    </a>
+
+    <nav id="sidebar" class="sidebar-wrapper">
+        <div class="sidebar-content">
+            <div class="sidebar-brand">
+                <a href="#" class="text-white">STOCK MANAGEMENT</a>
+                <div id="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <!-- sidebar-header  -->
+            <div class="sidebar-search">
+                <div>
+                    <div class="input-group">
+                        <input type="text" class="form-control search-menu" placeholder="Search...">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- sidebar-search  -->
+            <div class="sidebar-menu">
+                <ul>
+                    <li class="header-menu">
+                        <span>General</span>
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fa fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                            <span class="badge badge-pill badge-warning">New</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li>
+                                    <a href="#">Dashboard 1
+                                        <span class="badge badge-pill badge-success">Pro</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">Dashboard 2</a>
+                                </li>
+                                <li>
+                                    <a href="#">Dashboard 3</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span>E-commerce</span>
+                            <span class="badge badge-pill badge-danger">3</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li>
+                                    <a href="#">Products</a>
+                                </li>
+                                <li>
+                                    <a href="#">Orders</a>
+                                </li>
+                                <li>
+                                    <a href="#">Credit cart</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="far fa-gem"></i>
+                            <span>Components</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li>
+                                    <a href="#">General</a>
+                                </li>
+                                <li>
+                                    <a href="#">Panels</a>
+                                </li>
+                                <li>
+                                    <a href="#">Tables</a>
+                                </li>
+                                <li>
+                                    <a href="#">Icons</a>
+                                </li>
+                                <li>
+                                    <a href="#">Forms</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fa fa-chart-line"></i>
+                            <span>Charts</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li>
+                                    <a href="#">Pie chart</a>
+                                </li>
+                                <li>
+                                    <a href="#">Line chart</a>
+                                </li>
+                                <li>
+                                    <a href="#">Bar chart</a>
+                                </li>
+                                <li>
+                                    <a href="#">Histogram</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fa fa-globe"></i>
+                            <span>Maps</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li>
+                                    <a href="#">Google maps</a>
+                                </li>
+                                <li>
+                                    <a href="#">Open street map</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="header-menu">
+                        <span>Extra</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-book"></i>
+                            <span>Documentation</span>
+                            <span class="badge badge-pill badge-primary">Beta</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-calendar"></i>
+                            <span>Calendar</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-folder"></i>
+                            <span>Examples</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- sidebar-menu  -->
+        </div>
+        <!-- sidebar-content  -->
+        <div class="sidebar-footer">
+            <a href="#">
+                <i class="fa fa-bell"></i>
+                <span class="badge badge-pill badge-warning notification">3</span>
+            </a>
+            <a href="#">
+                <i class="fa fa-envelope"></i>
+                <span class="badge badge-pill badge-success notification">7</span>
+            </a>
+            <a href="#">
+                <i class="fa fa-cog"></i>
+                <span class="badge-sonar"></span>
+            </a>
+            <a href="{{ path('app_logout') }}">
+                <i class="fa fa-power-off"></i>
+            </a>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container-fluid">
+            <h2>Welcome Dashboard User {{app.user.email}} </h2>
+            <hr>
+            <section class="py-3 py-md-5">
+                <div class="container">
+                  <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10 col-xl-8 col-xxl-7">
+                      <div class="row gy-4">
+                        <div class="col-12 col-sm-6">
+                          <div class="card widget-card border-light shadow-sm">
+                            <div class="card-body p-4">
+                              <div class="row">
+                                <div class="col-8">
+                                  <h5 class="card-title widget-card-title mb-3">Sales</h5>
+                                  <h4 class="card-subtitle text-body-secondary m-0">$6,820</h4>
+                                </div>
+                                <div class="col-4">
+                                  <div class="d-flex justify-content-end">
+                                    <div class="lh-1 text-white bg-info rounded-circle p-3 d-flex align-items-center justify-content-center">
+                                      <!-- <i class="bi bi-truck fs-4"></i> -->
+                                      <i class="fa-solid fa-dollar-sign"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="d-flex align-items-center mt-3">
+                                    <span class="lh-1 me-3 bg-danger-subtle text-danger rounded-circle p-1 d-flex align-items-center justify-content-center">
+                                      <i class="bi bi-arrow-right-short bsb-rotate-45"></i>
+                                    </span>
+                                    <div>
+                                      <p class="fs-7 mb-0">-9%</p>
+                                      <p class="fs-7 mb-0 text-secondary">since last week</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="card widget-card border-light shadow-sm">
+                            <div class="card-body p-4">
+                              <div class="row">
+                                <div class="col-8">
+                                  <h5 class="card-title widget-card-title mb-3">Earnings</h5>
+                                  <h4 class="card-subtitle text-body-secondary m-0">$21,900</h4>
+                                </div>
+                                <div class="col-4">
+                                  <div class="d-flex justify-content-end">
+                                    <div class="lh-1 text-white bg-info rounded-circle p-3 d-flex align-items-center justify-content-center">
+                                      <!-- <i class="bi bi-currency-dollar fs-4"></i> -->
+                                      <i class="fa-solid fa-chart-simple"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="d-flex align-items-center mt-3">
+                                    <span class="lh-1 me-3 bg-success-subtle text-success rounded-circle p-1 d-flex align-items-center justify-content-center">
+                                      <i class="bi bi-arrow-right-short bsb-rotate-n45"></i>
+                                    </span>
+                                    <div>
+                                      <p class="fs-7 mb-0">+26%</p>
+                                      <p class="fs-7 mb-0 text-secondary">since last week</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="card widget-card border-light shadow-sm">
+                            <div class="card-body p-4">
+                              <div class="row">
+                                <div class="col-8">
+                                  <h5 class="card-title widget-card-title mb-3">Visitors</h5>
+                                  <h4 class="card-subtitle text-body-secondary m-0">3,764</h4>
+                                </div>
+                                <div class="col-4">
+                                  <div class="d-flex justify-content-end">
+                                    <div class="lh-1 text-white bg-info rounded-circle p-3 d-flex align-items-center justify-content-center">
+                                      <!-- <i class="bi bi-person fs-4"></i> -->
+                                      <i class="fa-solid fa-users"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="d-flex align-items-center mt-3">
+                                    <span class="lh-1 me-3 bg-success-subtle text-success rounded-circle p-1 d-flex align-items-center justify-content-center">
+                                      <i class="bi bi-arrow-right-short bsb-rotate-n45"></i>
+                                    </span>
+                                    <div>
+                                      <p class="fs-7 mb-0">+69%</p>
+                                      <p class="fs-7 mb-0 text-secondary">since last week</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <div class="card widget-card border-light shadow-sm">
+                            <div class="card-body p-4">
+                              <div class="row">
+                                <div class="col-8">
+                                  <h5 class="card-title widget-card-title mb-3">Orders</h5>
+                                  <h4 class="card-subtitle text-body-secondary m-0">786</h4>
+                                </div>
+                                <div class="col-4">
+                                  <div class="d-flex justify-content-end">
+                                    <div class="lh-1 text-white bg-info rounded-circle p-3 d-flex align-items-center justify-content-center">
+                                      <!-- <i class="bi bi-cart fs-4"></i> -->
+                                      <i class="fa-solid fa-cart-shopping"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="d-flex align-items-center mt-3">
+                                    <span class="lh-1 me-3 bg-danger-subtle text-danger rounded-circle p-1 d-flex align-items-center justify-content-center">
+                                      <i class="bi bi-arrow-right-short bsb-rotate-45"></i>
+                                    </span>
+                                    <div>
+                                      <p class="fs-7 mb-0">-21%</p>
+                                      <p class="fs-7 mb-0 text-secondary">since last week</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              </div>
+              </main>
+<!-- chart js -->
+              </div>
+              {% endif %}
+
+
+              
+              </body>
+              <script>
+                jQuery(function ($) {
+              
+              $(".sidebar-dropdown > a").click(function() {
+              $(".sidebar-submenu").slideUp(200);
+              if (
+              $(this)
+              .parent()
+              .hasClass("active")
+              ) {
+              $(".sidebar-dropdown").removeClass("active");
+              $(this)
+              .parent()
+              .removeClass("active");
+              } else {
+              $(".sidebar-dropdown").removeClass("active");
+              $(this)
+              .next(".sidebar-submenu")
+              .slideDown(200);
+              $(this)
+              .parent()
+              .addClass("active");
+              }
+              });
+              
+              $("#close-sidebar").click(function() {
+              $(".page-wrapper").removeClass("toggled");
+              });
+              $("#show-sidebar").click(function() {
+              $(".page-wrapper").addClass("toggled");
+              });
+              });
+              document.addEventListener("DOMContentLoaded", function() {
+                    const dropdownToggle = document.getElementById('navbarDropdownMenuAvatar');
+                    const dropdownMenu = document.querySelector('.dropdown-menu');
+              
+                    dropdownToggle.addEventListener('click', function(event) {
+                      event.preventDefault();
+                      dropdownMenu.classList.toggle('show');
+                    });
+              
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', function(event) {
+                      if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                        dropdownMenu.classList.remove('show');
+                      }
+                    });
+                  });
+              
+              
+              </script>
+
+
+
+
+
+
+
+
+              <!-- <script>
+  jQuery(function ($) {
+
+$(".sidebar-dropdown > a").click(function() {
+$(".sidebar-submenu").slideUp(200);
+if (
+$(this)
+.parent()
+.hasClass("active")
+) {
+$(".sidebar-dropdown").removeClass("active");
+$(this)
+.parent()
+.removeClass("active");
+} else {
+$(".sidebar-dropdown").removeClass("active");
+$(this)
+.next(".sidebar-submenu")
+.slideDown(200);
+$(this)
+.parent()
+.addClass("active");
+}
+});
+
+$("#close-sidebar").click(function() {
+$(".page-wrapper").removeClass("toggled");
+});
+$("#show-sidebar").click(function() {
+$(".page-wrapper").addClass("toggled");
+});
+});
+document.addEventListener("DOMContentLoaded", function() {
+      const dropdownToggle = document.getElementById('navbarDropdownMenuAvatar');
+      const dropdownMenu = document.querySelector('.dropdown-menu');
+
+      dropdownToggle.addEventListener('click', function(event) {
+        event.preventDefault();
+        dropdownMenu.classList.toggle('show');
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+          dropdownMenu.classList.remove('show');
+        }
+      });
+    });
+
+
+</script>         -->
