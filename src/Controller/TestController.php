@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class TestController extends AbstractController
 {
-    #[Route('/test', name: 'app_test')]
+    #[Route('/dashboard', name: 'app_test')]
     public function index(): Response
     {
         // $this->isGranted('ROLE_ADMIN');

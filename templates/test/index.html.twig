@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-
       <div id="right-sidebar" class="settings-panel">
         <i class="settings-close ti-close"></i>
         <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
@@ -165,7 +164,7 @@
                 <div class="d-sm-flex align-items-center justify-content-between border-bottom">
                   <div>
                     <div class="btn-wrapper">
-                      <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
+                      <a href="#" class="btn btn-primary text-white me-0 fs-6"><i class="fa-solid fa-plus"></i> Add Product</a>
                     </div>
                   </div>
                 </div>
@@ -258,6 +257,7 @@
                                         <div id="totalVisitors" class="progressbar-js-circle pr-2"></div>
                                       </div>
                                       <div>
+                                      {# (Count User) #}
                                         <p class="text-small mb-2">Total Visitors</p>
                                         <h4 class="mb-0 fw-bold">26.80%</h4>
                                       </div>
@@ -269,7 +269,8 @@
                                         <div id="visitperday" class="progressbar-js-circle pr-2"></div>
                                       </div>
                                       <div>
-                                        <p class="text-small mb-2">Visits per day</p>
+                                      {# (Count Role Admin) #}
+                                        <p class="text-small mb-2">Visits Admin</p>
                                         <h4 class="mb-0 fw-bold">9065</h4>
                                       </div>
                                     </div>
@@ -317,20 +318,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="row flex-grow">
-                          <div class="col-12 grid-margin stretch-card">
-                            <div class="card card-rounded table-darkBGImg">
-                              <div class="card-body">
-                                <div class="col-sm-8">
-                                  <h3 class="text-white upgrade-info mb-0">
-                                    Enhance your <span class="fw-bold">Campaign</span> for better outreach
-                                  </h3>
-                                  <a href="#" class="btn btn-info upgrade-btn">Upgrade Account!</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                       
                         <div class="row flex-grow">
                           <div class="col-12 grid-margin stretch-card">
                             <div class="card card-rounded">
@@ -341,7 +329,7 @@
                                    <p class="card-subtitle card-subtitle-dash">You have 50+ new requests</p>
                                   </div>
                                   <div>
-                                    <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new member</button>
+                                    <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Edit Member</button>
                                   </div>
                                 </div>
                                 <div class="table-responsive  mt-1">
@@ -537,6 +525,7 @@
                           <div class="col-md-6 col-lg-6 grid-margin stretch-card">
                             <div class="card card-rounded">
                               <div class="card-body card-rounded">
+                              {# Order Poduct #}
                                 <h4 class="card-title  card-title-dash">Recent Events</h4>
                                 <div class="list align-items-center border-bottom py-2">
                                   <div class="wrapper w-100">
@@ -605,6 +594,7 @@
                             <div class="card card-rounded">
                               <div class="card-body">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
+                                {# Order #}
                                   <h4 class="card-title card-title-dash">Activities</h4>
                                   <p class="mb-0">20 finished, 5 remaining</p>
                                 </div>
@@ -787,7 +777,7 @@
                                   <div class="col-lg-12">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                       <div>
-                                        <h4 class="card-title card-title-dash">Top Performer</h4>
+                                        <h4 class="card-title card-title-dash">Top Performer (Last User)</h4>
                                       </div>
                                     </div>
                                     <div class="mt-3">
