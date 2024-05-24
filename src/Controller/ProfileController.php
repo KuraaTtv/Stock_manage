@@ -25,7 +25,8 @@ class ProfileController extends AbstractController
         }
         $user_data = $entityManager->getRepository(User::class)->findOneBy(['email' => $user->getUserIdentifier()]);
         if (!$user_data) {
-            throw $this->createNotFoundException('User not found.');
+            // throw $this->createNotFoundException('');
+            $this->addFlash('error','User not found.');
         }
         $ProfilForm = $this->createForm(RegistrationFormType::class, $user_data);
         $ProfilForm->handleRequest($request);

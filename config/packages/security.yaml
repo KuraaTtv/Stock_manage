@@ -39,9 +39,11 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+    #   if user not login and in the url user pass a /dashboard and this is gonna redirect user to login page
     #   - { path: ^/login, roles: PUBLIC_ACCESS }
       - { path: ^/admin, roles: ROLE_ADMIN }
-    #   - { path: ^/user, roles: ROLE_USER }
+    #   if user not login and in the url user pass a /dashboard and this is gonna redirect user to login page
+    #   - { path: ^/*, roles: ROLE_USER }
 
     #  role_hierarchy:
     #     ROLE_EDITOR: ROLE_USER

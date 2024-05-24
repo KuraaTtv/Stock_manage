@@ -1,14 +1,11 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Profile{% endblock %}
-
 {% block body %}
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
 <div class="row flex-lg-nowrap">
   <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
   </div>
-
   <div class="col">
     <div class="row">
       <div class="col mb-3">
@@ -26,7 +23,7 @@
                 </div>
                 <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                   <div class="text-center text-sm-left mb-2 mb-sm-0">
-                    <h2 class="pt-sm-2 pb-1 mb-0 text-nowrap">Hi There</h2>
+                    <h2 class="pt-sm-2 pb-1 mb-0 text-nowrap">welcome Again</h2>
                     {# <p class="mb-0">@johnny.s</p> #}
                     <div class="text-muted"><h5>You Can Edit Your Password Here!</h5></div>
                     <div class="mt-2">
@@ -88,11 +85,12 @@
                     }
                 }
               </script>
-                  {{ form_end(ProfilForm) }}
+                  
                   <div class="row">
                       <div class="col d-flex justify-content">
                         <button class="btn btn-primary" type="submit">Save Changes</button>
                       </div>
+                      {{ form_end(ProfilForm) }}
                     </div>
                 </div>
               </div>

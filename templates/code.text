@@ -507,3 +507,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 </script>         -->
+
+Edit 
+
+#[Route('/{id}/edit',name:'edit')]
+    public function edit(Test $test,Request $request, EntityManagerInterface $em ):Response{
+        // dd($test)
+        $Form = $this->createForm(TestType::class,$test);
+        $Form->handleRequest($request);
+        if($Form->isSubmitted() && $Form->isValid()){
+            // Look the file TestType dateManipulation
+            // $test->setUpdatedAt(new \DateTimeImmutable());
+            $em->flush();
+            $this->addFlash('sucess','Profil Updated Sucessfuly');
+            return $this->redirectToRoute('app_home');
+        }
+        return $this->render('home/edit.html.twig',[
+            'test'=>$test,
+            'frm'=>$Form
+        ]);
