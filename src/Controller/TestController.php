@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\EditFormType;
+use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,19 +30,33 @@ class TestController extends AbstractController
     }
 
 
-    #[Route('/{id}/edit', name:'edit_profil')]
-    public function edit(User $user,EntityManagerInterface $entityManagerInterface , Request $request )
+    #[Route('/{id}/edit', name:'edit_profil' , methods: ['GET', 'POST'])]
+    public function edit(User $user, EntityManagerInterface $entityManagerInterface, Request $request)
     {
-      $EditForm = $this->createForm(EditFormType::class , $user);
-      $EditForm->handleRequest($request);
-      if($EditForm->isSubmitted()  && $EditForm->isValid()){
-        $entityManagerInterface->flush();
-        $this->addFlash('sucess','Profil Updated Sucessfuly');
-        return $this->redirectToRoute('app_test');
-      }
-      return $this->render('Admin/edit.html.twig',[
-        // 'test'=>$test,
-        'Editform'=>$EditForm->createview(),
-    ]);
+        
+        $editForm = $this->createForm(EditFormType::class, $user);
+        $editForm->handleRequest($request);
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $entityManagerInterface->persist($user);
+            $entityManagerInterface->flush();
+            $this->addFlash('success', 'Profile Updated Successfully');
+    
+            // Redirect to a different route
+            return $this->redirectToRoute('app_test');
+        }
+    
+        // Render the form in the template
+        return $this->render('Admin/edit.html.twig', [
+            'form' => $editForm->createView()
+        ]);
     }
+
+    #[Route('/delete/{id}',name:'delete')]
+    public function delete (Request $request,EntityManagerInterface $entityManagerInterface,User $user){
+      $entityManagerInterface->remove($user);
+      $entityManagerInterface->flush();
+      $this->addFlash('success', 'Profile Deleted Successfully');
+      return $this->redirectToRoute('app_test');
+    }
+    
 }

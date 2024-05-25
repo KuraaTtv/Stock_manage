@@ -1,8 +1,51 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
-    {# {{ form_start(Editform) }}
-        {{ form_widget(Editform) }}
-    {{ form_end(Editform) }} #}
-    hello world
+
+{{ form_errors(form) }}
+<div class="container">
+<div class="row flex-lg-nowrap ">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Edit Form</h4>
+                            <p class="card-description">
+                                You can only edit the role of user
+                 
+                            </p>
+                            {# <form class="forms-sample"> #}
+                            {{ form_errors(form) }}
+
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Email</label>
+                                    {{ form_start(form) }}
+                                    {{ form_row(form.email, {
+                                            'attr': {'class': 'form-control','readonly': 'readonly'},
+                                            'label': 'email',
+                                            'label_attr': {'class': 'text-uppercase fs-6'}
+                                    }) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_row(form.roles, {
+                                        'attr': {'class': 'form-select'},
+                                        'label': 'Roles',
+                                        'label_attr': {'class': 'text-uppercase fs-6'}
+                                    }) }}
+                                </div>
+                                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                <button class="btn btn-light">Cancel</button>
+                                {{ form_end(form) }}
+                            {# </form> #}
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+
+            
 {% endblock %}
+
+
+
+
+
+
+

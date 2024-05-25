@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class EditFormType extends AbstractType
@@ -25,14 +26,17 @@ class EditFormType extends AbstractType
                 ]),
             ],
         ])
-        ->add('roles', TextType::class, [
-            'label' => 'Roles',
-            'required' => false,
-        ])
-        ->add('password', PasswordType::class, [
-            'label' => 'Password',
-            'required' => false,
+        ->add('roles', ChoiceType::class, [
+            'choices' => [
+                'Role Admin' => 'ROLE_ADMIN',
+                'Role User' => 'ROLE_USER',
+            ],
+            'multiple' => true
         ]);
+        // ->add('password', PasswordType::class, [
+        //     'label' => 'Password',
+        //     'required' => false,
+        // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
