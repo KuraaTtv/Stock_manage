@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\User;
+use App\Form\CategoryType;
 use App\Form\EditFormType;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
@@ -14,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TestController extends AbstractController
 {
+
     #[Route('/dashboard', name: 'app_test')]
     public function index(UserRepository $userRepository): Response
     { 
@@ -57,6 +60,28 @@ class TestController extends AbstractController
       $entityManagerInterface->flush();
       $this->addFlash('success', 'Profile Deleted Successfully');
       return $this->redirectToRoute('app_test');
+    }
+
+
+    // CRUD OF CATEGORY
+
+    #[Route('/categroy',name:'categroy')]
+    public function create(Request $request , EntityManagerInterface $em){
+        $category = new Category();
+        $CatForm = $this->createForm(CategoryType::class , $category);
+        $CatForm->handleRequest($request);
+        if($CatForm->isSubmitted() && $CatForm->isValid()){
+            $em->persist($category);
+            $em->flush();
+            $this->addFlash('success','Category Added Successfully');
+            return $this->redirectToRoute('app_test');
+        }
+        
+        // $this->addFlash('error','Error Category Not Added.');
+        return $this->render('Admin/category.html.twig',[
+            'Form'=>$CatForm
+        ]);
+
     }
     
 }
