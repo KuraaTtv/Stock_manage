@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"/>
+{{ form_errors(Form) }}
+<style>
+        .card-title {
+            font-size: 1.25rem;
+        }
+        .card-text {
+            font-size: 1rem;
+        }
+    </style>
+<!-- <div class="container mt-5 p-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">  -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Add New Category</h4>
+                    <p class="card-text">Add new Category for your product</p>
+                    {{ form_start(Form) }}
+                    <div class="mb-3">
+                        {{ form_row(Form.Name, {
+                            'attr': {'class': 'form-control'},
+                            'label': 'Category Name',
+                            'label_attr': {'class': 'fs-6'}
+                        }) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_row(Form.Description, {
+                            'attr': {'class': 'form-control'},
+                            'label': 'Category Description',
+                            'label_attr': {'class': 'fs-6'}
+                        }) }}
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-light">Cancel</button>
+
+                    </div>
+{{ form_end(Form) }}
+                    {% endblock %}

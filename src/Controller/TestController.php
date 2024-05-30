@@ -100,7 +100,7 @@ class TestController extends AbstractController
         $results = $queryBuilder->getQuery()->getResult();
         $formattedData = [];
         foreach ($results as $category) {
-        // $role = in_array('ROLE_ADMIN',$model['roles'])?'ADMIN':'USER';
+        
             $formattedData[] = [
                 'id' => $category->getId(),
                 'Name' => $category->getName(),

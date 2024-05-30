@@ -3,7 +3,7 @@
 
  <div class="card shadow-sm">
  <div class="form-group d-flex">
-<button type="submit" class="add btn btn-primary todo-list-add-btn m-4" id="add-task">Add New modele</button>
+<a type="submit" href="{{path('mod_create')}}" class="add btn btn-primary todo-list-add-btn m-4" id="add-task">Add New modele</a>
 </div>
     <div class="card-body">
  <table id="modele" class="display mt-4" style="width:100%">
@@ -14,6 +14,7 @@
                 <th>path</th>
                 <th>icon</th>
                 <th>role</th>
+                <th>title</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -31,6 +32,7 @@
                     { data: 'path'},
                     {data: 'icon'},
                     {data: 'role'},
+                    {data:'title'},
                     { data: 'actions', orderable: false, searchable: false }
                 ],
                 "order": [[0, 'asc']],

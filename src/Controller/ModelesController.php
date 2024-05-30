@@ -2,12 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Models;
+use App\Form\ModelsType;
+use Doctrine\ORM\EntityManager;
 use App\Repository\ModelsRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ModelesController extends AbstractController
 {
@@ -54,15 +58,16 @@ class ModelesController extends AbstractController
         $ModeldData = [];
 
         foreach ($results as $model) {
-            // $role = in_array('ROLE_ADMIN',$model['roles'])?'ADMIN':'USER';
+            // $role = in_array('ROLE_ADMIN',$model['role'])?'ADMIN':'USER';
                 $ModeldData[] = [
                     'id' => $model->getId(),
                     'name' => $model->getName(),
                     'path' => $model->getPath(),
                     'icon'=>$model->getIcon(),
                     'role'=>$model->getRole(),
-                    'actions' => '<a href="/category/'.$model->getId().'/edit" class="btn btn-info mb-2">Edit</a>
-                                 <a href="/category/'.$model->getId().'/delete" class="btn btn-danger mb-2" onclick="return confirm(\'Are you sure you want to delete this category?\')">Delete</a>'
+                    'title'=>$model->getTitle(),
+                    'actions' => '<a href="/model/'.$model->getId().'/edit" class="btn btn-info mb-2">Edit</a>
+                                 <a href="/model/'.$model->getId().'/delete" class="btn btn-danger mb-2" onclick="return confirm(\'Are you sure you want to delete this modele?\')">Delete</a>'
     
     
                     ];
@@ -74,6 +79,66 @@ class ModelesController extends AbstractController
                 'data' => $ModeldData,
             ]);
     }
+
+
+    #[Route('/model/create',name:'mod_create')]
+    public function create(EntityManagerInterface $em,Request $request){
+        // try{
+        $models = new Models();
+        $ModForm = $this->createForm(ModelsType::class , $models);
+        $ModForm->handleRequest($request);
+        if($ModForm->isSubmitted() && $ModForm->isValid()){
+            $em->persist($models);
+            $em->flush();
+            $this->addFlash('success','Models Added Successfully');
+            return $this->redirectToRoute('app_modeles');
+        // }
+        }
+        // catch(\Exception $e){
+        // $this->addFlash('error','Error Model Not Added.');
+        return $this->render('modeles/create.html.twig',[
+            'Form'=>$ModForm
+        ]);
+    
+    }
+    #[Route('/model/{id}/edit', name:'model_edit')]
+    public function editModel(Models $models, EntityManagerInterface $entityManagerInterface, Request $request){
+        // try{
+            $editFormMod = $this->createForm(ModelsType::class, $models);
+            $editFormMod->handleRequest($request);
+            if ($editFormMod->isSubmitted() && $editFormMod->isValid()) {
+                $entityManagerInterface->persist($models);
+                $entityManagerInterface->flush();
+                $this->addFlash('success', 'Modele Updated Successfully');
+                // Redirect to a different route
+                return $this->redirectToRoute('app_modeles');
+            }
+        // }
+        // catch(\Exception $e){
+            // $this->addFlash('error','Error Modele Not Updatedd.');
+            return $this->render('modeles/edit.html.twig', [
+                'Form' => $editFormMod->createView()
+            ]);
+
+        // }
+    }
+
+        #[Route('/model/{id}/delete', name:'model_delete')]
+        public function delete (EntityManagerInterface $em,Models $models){
+            $em->remove($models);
+            $em->flush();
+            $this->addFlash('success', 'Modele Deleted Successfully');
+            return $this->redirectToRoute('app_modeles');
+        }
+
+
+
+
+
+
+    
+
+
     
 
 }
