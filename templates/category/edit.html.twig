@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{# Dashbord moving #}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"/>
+<div class="container mt-5 p-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Edit Category</h4>
+                    <p class="card-text">Edit the details of your category</p>
+                    {{ form_start(form) }}
+                    <div class="mb-3">
+                        {{ form_row(form.Name, {
+                            'attr': {'class': 'form-control'},
+                            'label': 'Category Name',
+                            'label_attr': {'class': 'fs-6'}
+                        }) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_row(form.Description, {
+                            'attr': {'class': 'form-control'},
+                            'label': 'Category Description',
+                            'label_attr': {'class': 'fs-6'}
+                        }) }}
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-light">Cancel</button>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

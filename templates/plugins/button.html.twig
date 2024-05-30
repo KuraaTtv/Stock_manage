@@ -1,0 +1,8 @@
+{# templates/plugins/button.html.twig #}
+<button class="btn btn-primary" onclick="handleAction('{{ model.id }}')">Action</button>
+
+{# <a href="{{ path('category', {'id': model.id}) }}">edit</a> #}
+{# <form method="post" action="{{ path('model_delete', {'id': model.id}) }}" style="display:inline-block;" onsubmit="return confirm('Are you sure?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ model.id) }}">
+    <button class="btn btn-danger">delete</button>
+</form> #}

@@ -2,20 +2,25 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\User;
+use App\Entity\Models;
+use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Form\EditFormType;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
+use App\Repository\ModelsRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class TestController extends AbstractController
 {
+    
 
     #[Route('/dashboard', name: 'app_test')]
     public function index(UserRepository $userRepository): Response
@@ -65,23 +70,57 @@ class TestController extends AbstractController
 
     // CRUD OF CATEGORY
 
-    #[Route('/categroy',name:'categroy')]
-    public function create(Request $request , EntityManagerInterface $em){
-        $category = new Category();
-        $CatForm = $this->createForm(CategoryType::class , $category);
-        $CatForm->handleRequest($request);
-        if($CatForm->isSubmitted() && $CatForm->isValid()){
-            $em->persist($category);
-            $em->flush();
-            $this->addFlash('success','Category Added Successfully');
-            return $this->redirectToRoute('app_test');
+    
+    // #[Route('/categroy/show',name:'data')]
+    #[Route('/data',  name: 'category_data')]
+    public function getData(CategoryRepository $categoryRepository, Request $request): JsonResponse
+    {
+        $draw = $request->query->get('draw');
+        $start = $request->query->get('start') ?? 0;
+        $length = $request->query->get('length') ?? 10;
+        $search = $request->query->all('search')['value']  ?? '';
+        $order = $request->query->all('order');
+        $orderColumnIndex = isset($order[0]['column']) ? $order[0]['column'] : null;
+        $columns = $request->query->all('columns');
+        $orderColumn = isset($columns[$orderColumnIndex]['data']) ? $columns[$orderColumnIndex]['data'] : null;
+        $orderDir = isset($order[0]['dir']) ? $order[0]['dir'] : 'asc';
+        $queryBuilder = $categoryRepository->createQueryBuilder('c');
+        // Apply search query
+        if (!empty($search)) {
+            $queryBuilder->andWhere('c.Name LIKE :search OR c.Description LIKE :search')
+                ->setParameter('search', "%$search%");
         }
-        
-        // $this->addFlash('error','Error Category Not Added.');
-        return $this->render('Admin/category.html.twig',[
-            'Form'=>$CatForm
+        if (!empty($orderColumn)) {
+            $queryBuilder->orderBy("c.$orderColumn", $orderDir);
+        }
+        $totalRecords = $categoryRepository->count([]);
+        $queryBuilder->setFirstResult($start)
+            ->setMaxResults($length);
+            
+        $results = $queryBuilder->getQuery()->getResult();
+        $formattedData = [];
+        foreach ($results as $category) {
+        // $role = in_array('ROLE_ADMIN',$model['roles'])?'ADMIN':'USER';
+            $formattedData[] = [
+                'id' => $category->getId(),
+                'Name' => $category->getName(),
+                'Description' => $category->getDescription(),
+                'actions' => '<a href="/category/'.$category->getId().'/edit" class="btn btn-info mb-2">Edit</a>
+                             <a href="/category/'.$category->getId().'/delete" class="btn btn-danger mb-2" onclick="return confirm(\'Are you sure you want to delete this category?\')">Delete</a>'
+                ];
+        }
+        return new JsonResponse([
+            'draw' => $draw,
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalRecords,
+            'data' => $formattedData,
         ]);
-
     }
+
+
+
+    
     
 }
+
+

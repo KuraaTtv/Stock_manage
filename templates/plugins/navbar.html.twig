@@ -23,11 +23,15 @@
           <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">{{app.user.email}}</span></h1>
           {# Use Switch #}
           {% set current_route = app.request.attributes.get('_route') %}
+          {% set current_route = app.request.attributes.get('_route') %}
             {% if current_route == 'app_profile'%}
           <h3 class="welcome-sub-text">Edit your profile esaily </h3>
           {%elseif current_route == 'app_test' %}
           <h3 class="welcome-sub-text">Your performance summary this week </h3>
+          {%elseif current_route == 'categroy_create' %}
+          <h3 class="welcome-sub-text">Manage your product category</h3>
           {%endif%}
+
         </li>
       </ul>
       <ul class="navbar-nav ms-auto">

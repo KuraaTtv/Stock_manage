@@ -1,29 +1,29 @@
 
-<nav class="sidebar sidebar-offcanvas" id="sidebar">
-<ul class="nav">
+<nav class="sidebar sidebar-offcanvas fixed-left" id="sidebar">
+  <ul class="nav">
+    <li class="nav-item">
+      <a class="nav-link" href="{{ path('app_test')}}">
+        <i class="mdi mdi-grid-large menu-icon"></i>
+        <span class="menu-title fs-6">Dashboard</span>
+      </a>
+    </li>
+    {% for Model in Models() %}
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-toggle="collapse" href="#ui-basic-{{ loop.index }}" aria-expanded="false" aria-controls="ui-basic-{{ loop.index }}">
+        <i class="m-3 {{Model.icon}}"></i>
+        <span class="menu-title fs-6">{{ Model.name }}</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="ui-basic-{{ loop.index }}">
+        <ul class="nav flex-column sub-menu">
           <li class="nav-item">
-            <a class="nav-link" href="{{ path('app_test')}}">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
+            <a class="nav-link" href="{{ path(Model.path)}}">{{ Model.name }}</a>
           </li>
-          <li class="nav-item nav-category">UI Elements</li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="menu-icon mdi mdi-floor-plan"></i>
-              <span class="menu-title">UI Elements</span>
-              <i class="menu-arrow"></i> 
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{path('app_modeles')}}">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-              </ul>
-            </div>
-          </li>
-          </ul>
+        </ul>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  
           <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
       </nav>
-      
-

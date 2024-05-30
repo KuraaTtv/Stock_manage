@@ -5,32 +5,40 @@
         <title>{% block title %}Stock Management{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         <!-- Bootstarp -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        {# <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> #}
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="{{asset('styles/style.css')}}" type="text/css"/>
          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/brands.min.css"/>
+         {# DropDown ui #}
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+
+        {# Datatables ui #}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.semanticui.css"/>
                 <!-- Icon -->     
         {% block stylesheets %}
                   <!-- plugins:css -->
-            <link rel="stylesheet" href="../assets/vendors/feather/feather.css">
-            <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
-            <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
-            <link rel="stylesheet" href="../assets/vendors/typicons/typicons.css">
-            <link rel="stylesheet" href="../assets/vendors/simple-line-icons/css/simple-line-icons.css">
-            <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+            <link rel="stylesheet" href="{{asset('assets/vendors/feather/feather.css')}}">
+            <link rel="stylesheet" href="{{asset('assets/vendors/mdi/css/materialdesignicons.min.css')}}">
+            <link rel="stylesheet" href="{{asset('assets/vendors/ti-icons/css/themify-icons.css')}}">
+            <link rel="stylesheet" href="{{asset('assets/vendors/typicons/typicons.css')}}">
+            <link rel="stylesheet" href="{{asset('assets/vendors/simple-line-icons/css/simple-line-icons.css')}}">
+            <link rel="stylesheet" href="{{asset('assets/vendors/css/vendor.bundle.base.css')}}">
             <!-- endinject -->
             <!-- Plugin css for this page -->
             <link rel="stylesheet" href="../assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
             <link rel="stylesheet" href="../assets/js/select.dataTables.min.css">
             <!-- End plugin css for this page -->
             <!-- inject:css -->
-            <link rel="stylesheet" href="../assets/css/vertical-layout-light/style.css">
+            <link rel="stylesheet" href="{{asset('assets/css/vertical-layout-light/style.css')}}">
             <!-- endinject -->
             {# Url Icon #}
             {# <link rel="shortcut icon" href="../assets/images/favicon.png" /> #}
@@ -65,24 +73,24 @@
         </div>
     {% block javascripts %}
           <!-- plugins:js -->
-          <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+          <script src="{{asset('assets/vendors/js/vendor.bundle.base.js')}}"></script>
           <!-- endinject -->
           <!-- Plugin js for this page -->
-          <script src="../assets/vendors/chart.js/Chart.min.js"></script>
-          <script src="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-          <script src="../assets/vendors/progressbar.js/progressbar.min.js"></script>
+          <script src="{{asset('assets/vendors/chart.js/Chart.min.js')}}"></script>
+          <script src="{{asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+          <script src="{{asset('assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
 
           <!-- End plugin js for this page -->
           <!-- inject:js -->
-          <script src="../assets/js/off-canvas.js"></script>
-          <script src="../assets/js/hoverable-collapse.js"></script>
-          <script src="../assets/js/template.js"></script>
-          <script src="../assets/js/settings.js"></script>
-          <script src="../assets/js/todolist.js"></script>
+          <script src="{{asset('assets/js/off-canvas.js')}}"></script>
+          <script src="{{asset('assets/js/hoverable-collapse.js')}}"></script>
+          <script src="{{asset('assets/js/template.js')}}"></script>
+          <script src="{{asset('assets/js/settings.js')}}"></script>
+          <script src="{{asset('assets/js/todolist.js')}}"></script>
           <!-- endinject -->
           <!-- Custom js for this page-->
-          <script src="../assets/js/dashboard.js"></script>
-          <script src="../assets/js/Chart.roundedBarCharts.js"></script>
+          <script src="{{asset('assets/js/dashboard.js')}}"></script>
+          {# <script src="../assets/js/Chart.roundedBarCharts.js"></script> #}
           <!-- End custom js for this page-->
 
     {% endblock %}

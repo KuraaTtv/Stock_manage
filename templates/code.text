@@ -526,3 +526,139 @@ Edit
             'test'=>$test,
             'frm'=>$Form
         ]);
+
+
+
+        //    #[Route('/categroy',name:'categroy_data')]
+//    #[Route('/categroy/show',name:'categroy_show')]
+   public function showCategroy (Category $category ,CategoryRepository $categoryRepository){
+    // $category = $categoryRepository->findAll();
+    // $data = [];
+    // foreach($category as $cat){
+    //     $data[]=[
+    //         'id'=> $cat->getId(),
+    //         'Name'=> $cat->getName(),
+    //         'Description'=> $cat->getDescription()
+    //     ];
+    // }
+    // return new JsonResponse(['data' => $data]);
+   }
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#table').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url":"/categroy",
+                "type": "GET",
+                "data": function(d) {
+                    d.draw = d.draw || 0;
+                    d.start = d.start || 0;
+                    d.length = d.length || 15;
+                },
+            },
+            "order": [[0, 'asc']],
+            "columns": [
+                { "data": "id",
+                    'data':'name'
+                    
+                },
+            ],
+            "autoWidth": false,
+            "bDestroy": true
+        });
+    });
+</script>
+
+
+
+public function getData(Request $request , EntityManagerInterface $em): JsonResponse
+    {
+        $draw = $request->query->get('draw');
+        $start = $request->query->get('start') ?? 0;
+        $length = $request->query->get('length') ?? 10;
+        $search = $request->query->all('search')['value']  ?? '';
+        $orderColumnIndex = $request->query->all('order')[0]['column'];
+        $orderColumn = $request->query->all('columns')[$orderColumnIndex]['data'];
+        $orderDir = $request->query->all('order')[0]['dir'] ?? 'asc';
+            $queryBuilder = $em->createQueryBuilder()
+            ->select('m.id', 'm.name', 'm.path', 'm.icon', 'm.role')
+            ->from(Models::class, 'm');
+            if (!empty($search)) {
+                $queryBuilder->andWhere('m.name LIKE :search OR m.path LIKE :search OR m.icon LIKE :search OR m.role LIKE :search')
+                    ->setParameter('search', "%$search%");
+            }
+            if (!empty($orderColumn)) {
+                $queryBuilder->orderBy("m.$orderColumn", $orderDir);
+            }
+            $totalRecords = $em->createQueryBuilder()
+            ->select('COUNT(m.id)')
+            ->from(Models::class, 'm')
+            ->getQuery()
+            ->getSingleScalarResult();
+            $queryBuilder->setFirstResult($start)
+            ->setMaxResults($length);
+            $results = $queryBuilder->getQuery()->getResult();
+            $formattedData = [];
+            foreach ($results as $model) {
+                $role = in_array('ROLE_ADMIN',$model['role'])?'ADMIN':'USER';
+                    $formattedData[] = [
+                        'id' => $model['id'],
+                        'name' => $model['name'],
+                        'path' => $model['path'],
+                        'icon' => $model['icon'],
+                        'roles' => $role 
+                    ];
+                    }
+        return new JsonResponse([
+            'draw' => $draw,
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalRecords,
+            'aadata' => $formattedData,
+        ]);
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="{{asset('styles/style.css')}}" type="text/css"/>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/brands.min.css"/>
+        {# Datatbles #}
+      <link rel="stylesheet"  href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css" />
+     <link rel="stylesheet"  href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.min.css" /> 
+
+
+
+
+             <!-- plugins:css -->
+                    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css/>
+
+            <link rel="stylesheet" href="../assets/vendors/feather/feather.css">
+            <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+            <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
+            <link rel="stylesheet" href="../assets/vendors/typicons/typicons.css">
+            <link rel="stylesheet" href="../assets/vendors/simple-line-icons/css/simple-line-icons.css">
+            <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+            <!-- endinject -->
+            <!-- Plugin css for this page -->
+            {# <link rel="stylesheet" href="../assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css"> #}
+            {# <link rel="stylesheet" href="../assets/js/select.dataTables.min.css"> #}
+            <!-- End plugin css for this page -->
+            <!-- inject:css -->
+            <link rel="stylesheet" href="../assets/css/vertical-layout-light/style.css">
+            <!-- endinject -->
+            {# Url Icon #}
+            {# <link rel="shortcut icon" href="../assets/images/favicon.png" /> #}
+
+            {# Datatables cdn #}

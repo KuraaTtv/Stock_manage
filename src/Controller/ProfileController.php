@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 class ProfileController extends AbstractController
 {
+    
     #[Route('/profile', name: 'app_profile')]
     public function index(Request $request ,EntityManagerInterface $entityManager , UserPasswordHasherInterface $passwordHasher): Response
     {
