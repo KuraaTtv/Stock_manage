@@ -15,11 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ModelesController extends AbstractController
 {
-    // private $modelsRepository;
-    // // public function __construct(ModelsRepository $modelsRepository)
-    // // {
-    // //     $this->modelsRepository = $modelsRepository;
-    // // }
     #[Route('/modeles', name: 'app_modeles')]
     public function index(ModelsRepository $modelsRepository):Response
     {
