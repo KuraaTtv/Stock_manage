@@ -8,14 +8,18 @@ use Doctrine\ORM\EntityManager;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ProfileController extends AbstractController
 {
@@ -51,10 +55,6 @@ class ProfileController extends AbstractController
             'ProfilForm' => $ProfilForm->createView(),
         ]);
     }
-
-
-    // USERS LIST TO EDIT AND DELETE 
-    // https://chatgpt.com/share/579dcd19-84ab-404a-acf3-737b6fc14626
 #[Route('/profils', name:'users_profil')]
 public function profils(){
     return $this->render('profile/users.html.twig');
@@ -86,7 +86,7 @@ public function profils(){
 
         $results = $queryBuilder->getQuery()->getResult();
         $UserData = [];
-        $currentuser =$securityController->getUser();
+        // $currentuser =$securityController->getUser();
         foreach ($results as $user) {
             $role = in_array('ROLE_ADMIN',$user->getRoles())?'ADMIN':'USER';
             if($role =='ADMIN'){
@@ -129,8 +129,6 @@ public function profils(){
                 'form' => $editFormMod->createView()
             ]);
         }
-
-
         #[Route('profile/{id}/delete',name:'delete_user')]
         public function delete (EntityManagerInterface $entityManagerInterface,User $user){
           $entityManagerInterface->remove($user);
@@ -138,5 +136,5 @@ public function profils(){
           $this->addFlash('success', 'Profile Deleted Successfully');
           return $this->redirectToRoute('users_profil');
         }
-
 }
+

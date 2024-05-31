@@ -164,7 +164,7 @@
                 <div class="d-sm-flex align-items-center justify-content-between border-bottom">
                   <div>
                     <div class="btn-wrapper">
-                      <a href="#" class="btn btn-primary text-white me-0 fs-6"><i class="fa-solid fa-plus"></i> Add Product</a>
+                      <a href="{{path('create_product')}}" class="btn btn-primary text-white me-0 fs-6"><i class="fa-solid fa-plus"></i> Add Product</a>
                     </div>
                   </div>
                 </div>
@@ -175,8 +175,8 @@
                         <div class="statistics-details d-flex align-items-center justify-content-between">
                           <div>
                           {# Product Count #}
-                            <p class="statistics-title">Bounce Rate </p>
-                            <h3 class="rate-percentage">32.53%</h3>
+                            <p class="statistics-title">Products </p>
+                            <h3 class="rate-percentage text-centre">{{products}}</h3>
                             <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>-0.5%</span></p>
                           </div>
                           <div>

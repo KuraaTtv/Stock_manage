@@ -11,7 +11,9 @@ use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Repository\ModelsRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,17 +25,19 @@ class TestController extends AbstractController
     
 
     #[Route('/dashboard', name: 'app_test')]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository,ProductRepository $productRepository): Response
     { 
         // dd($users);
         // $this->isGranted('ROLE_ADMIN');
         $users = $userRepository->HowMuchUser();
         $admins = $userRepository->HowUserAdmin();
         $all_user = $userRepository->findAll();
+        $products = $productRepository->count();
         return $this->render('test/index.html.twig',[
             'users'=>$users,
             'admin'=>$admins,
             'all_user'=>$all_user,
+            'products'=>$products
         ]);
     }
 
@@ -60,18 +64,12 @@ class TestController extends AbstractController
     }
 
     #[Route('/delete/{id}',name:'delete')]
-    public function delete (Request $request,EntityManagerInterface $entityManagerInterface,User $user){
+    public function delete (EntityManagerInterface $entityManagerInterface,User $user){
       $entityManagerInterface->remove($user);
       $entityManagerInterface->flush();
       $this->addFlash('success', 'Profile Deleted Successfully');
       return $this->redirectToRoute('app_test');
     }
-
-
-    // CRUD OF CATEGORY
-
-    
-    // #[Route('/categroy/show',name:'data')]
     #[Route('/data',  name: 'category_data')]
     public function getData(CategoryRepository $categoryRepository, Request $request): JsonResponse
     {
@@ -116,6 +114,10 @@ class TestController extends AbstractController
             'data' => $formattedData,
         ]);
     }
+
+    // Count The product
+
+    
 
 
 
