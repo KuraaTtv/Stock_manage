@@ -1,0 +1,40 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top bg-light navbar-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">Stock Manage</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto align-items-center">
+      {% for Model in Models() %}
+      {% if "ROLE_USER" in Model.role %}
+        <li class="nav-item">
+          <a class="nav-link mx-2 fs-6" href="{{path(Model.path)}}"><i class="fas fa-bell pe-2"></i>{{Model.name}}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</nav>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Initialize all input of type date
+    var toggler = document.querySelector('.navbar-toggler');
+    var collapse = document.querySelector('#navbarSupportedContent');
+
+    toggler.addEventListener('click', function () {
+      collapse.classList.toggle('show');
+    });
+  });
+</script>
+<!-- Navbar -->

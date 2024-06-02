@@ -53,11 +53,16 @@
           <div class="container-scroller">
             {% set current_route = app.request.attributes.get('_route') %}
             {% if current_route != 'app_login' and current_route != 'app_register' %}
-           
-                  {% include 'plugins/navbar.html.twig' %}
+            {% if "ROLE_ADMIN" in app.user.roles  %}
+                    {% include 'plugins/navbar.html.twig' %}
+            {% elseif "ROLE_USER" in app.user.roles  %}
+                    {% include 'plugins/navbar2.html.twig' %}
+            {% endif %} 
            <div class="container-fluid page-body-wrapper">
+            {% if "ROLE_ADMIN" in app.user.roles %}
                   {% include 'plugins/sidebar.html.twig'%}
-            {%endif%}
+            {% endif %}
+            {% endif %}
         <!-- Content -->
         <div class="main-panel">
           <div class="content-wrapper">
