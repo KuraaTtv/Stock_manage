@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<link rel="stylesheet" href="{{asset('../styles/style.css')}}"/>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container py-5">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <span class="pull-right">(<strong>{{ products|length }}</strong>) items</span>
+                        <h5>Items in your cart</h5>
+                    </div>
+                    {% set totale = 0 %}
+                    {% for product in products %}
+                        <div class="ibox-content">
+                            <div class="table-responsive">
+                                <table class="table shoping-cart-table">
+                                    <tbody>
+                                    <tr>
+                                        <td width="90">
+                                            <div class="cart-product-imitation">
+                                                <img src="{{ asset('uploads/'~ product.picture) }}"/>
+                                            </div>
+                                        </td>
+                                        <td class="desc">
+                                            <h3>
+                                                <a href="#" class="text-navy">
+                                                   {{product.name}}
+                                                </a>
+                                            </h3>
+                                            <p class="small">
+                                            {{product.description}}
+                                            </p>
+
+                                            <div class="m-t-sm">
+                                                <a href="#" class="btn btn-danger"><i class="fa fa-trash"></i> Remove item</a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h4>
+                                               Your Quntity: {{product.StockQu}}<br/>
+                                                Price : {{product.price}}
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                            {% set totale = totale + (product.price * product.StockQu)  %}
+                    {% endfor %}
+                    
+                    <div class="ibox-content">
+                        <button class="btn btn-primary pull-right"><i class="fa fa fa-shopping-cart"></i> Checkout</button>
+                        <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</button>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Cart Summary</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <span>
+                            {{totale}}
+                        </span>
+                        <h2 class="font-bold">
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

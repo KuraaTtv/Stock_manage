@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TestController extends AbstractController
 {
@@ -27,18 +28,24 @@ class TestController extends AbstractController
     #[Route('/dashboard', name: 'app_test')]
     public function index(UserRepository $userRepository,ProductRepository $productRepository): Response
     { 
-        // dd($users);
-        // $this->isGranted('ROLE_ADMIN');
         $users = $userRepository->HowMuchUser();
         $admins = $userRepository->HowUserAdmin();
         $all_user = $userRepository->findAll();
         $products = $productRepository->count();
+        $pro = $productRepository->findAll();
+
+        if(!$this->IsGranted('ROLE_ADMIN')){
+            return $this->render('client/index.html.twig' ,[
+                'products' =>$pro
+            ]);
+        }
         return $this->render('test/index.html.twig',[
             'users'=>$users,
             'admin'=>$admins,
             'all_user'=>$all_user,
             'products'=>$products
         ]);
+    
     }
 
 

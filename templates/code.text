@@ -661,4 +661,58 @@ public function getData(Request $request , EntityManagerInterface $em): JsonResp
             {# Url Icon #}
             {# <link rel="shortcut icon" href="../assets/images/favicon.png" /> #}
 
-            {# Datatables cdn #}
+            {# Datatables cdn #}namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Annotation\Route;
+
+class CartController extends AbstractController
+{
+    /**
+     * @Route("/cart", name="cart_index")
+     */
+    public function index(SessionInterface $session): Response
+    {
+        $cart = $session->get('cart', []);
+
+        return $this->render('cart/index.html.twig', [
+            'cart' => $cart,
+        ]);
+    }
+
+    /**
+     * @Route("/cart/add/{id}", name="cart_add")
+     */
+    public function add(int $id, SessionInterface $session): Response
+    {
+        $cart = $session->get('cart', []);
+
+        if (!isset($cart[$id])) {
+            $cart[$id] = 0;
+        }
+
+        $cart[$id]++;
+        $session->set('cart', $cart);
+
+        return $this->redirectToRoute('cart_index');
+    }
+
+    /**
+     * @Route("/cart/remove/{id}", name="cart_remove")
+     */
+    public function remove(int $id, SessionInterface $session): Response
+    {
+        $cart = $session->get('cart', []);
+
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+        }
+
+        $session->set('cart', $cart);
+
+        return $this->redirectToRoute('cart_index');
+    }
+}

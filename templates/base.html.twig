@@ -64,11 +64,13 @@
             {% endif %}
             {% endif %}
         <!-- Content -->
+        {% if "ROLE_ADMIN" in app.user.roles %}
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="row">
+            {% endif %}
             {% include('messages/flash_message.html.twig') %}
-                  {%block body %}
+                  {% block body %}
                   {% endblock  %}
 
           </div>
