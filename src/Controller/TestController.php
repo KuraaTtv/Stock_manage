@@ -5,12 +5,15 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Models;
 use App\Entity\Category;
+use App\Entity\OrderItems;
 use App\Form\CategoryType;
 use App\Form\EditFormType;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Repository\ModelsRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\OrderItemsRepository;
+use App\Repository\OrdersRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -122,7 +125,28 @@ class TestController extends AbstractController
         ]);
     }
 
-    // Count The product
+    // chart js
+
+    
+    #[Route('/Data',name :'data_chart')]
+    public function ShowChart(ProductRepository $productRepository,OrdersRepository $ordersRepository,UserRepository $userRepository,OrderItemsRepository $orderItemsRepository){
+        $productsCount = $productRepository->count();
+        $orderCount = $ordersRepository->count();
+        $orderItems = $orderItemsRepository->count();
+        $UserCount = $userRepository->count();
+        $RoleAdmin = $userRepository->HowUserAdmin();
+        return $this->json([
+            'productsCount' => $productsCount,
+            'orderCount'=>$orderCount,
+            'userCount' =>$UserCount,
+            'RoleAdmin'=>$RoleAdmin,
+            'orderItems'=>$orderItems
+        ]);
+    }
+    #[Route('/Charts',name :'app_chart')]
+    public function Chart (){
+        return $this->render('Admin/Chart.html.twig');
+    }
 
     
 

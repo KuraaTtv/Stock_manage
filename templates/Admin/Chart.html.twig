@@ -1,0 +1,172 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<style>
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; 
+}
+.container > div {
+    flex: 1;
+    min-width: 300px; 
+    max-width: 400px;
+    margin-left: 100px; 
+    margin-right: 100px; 
+}
+</style>
+<div class="container">
+    <div id="productOrdersChartContainer">
+        <canvas id="productChart" width="60" height="60"></canvas>
+    </div>
+    <div id="usersChartContainer">
+        <canvas id="ordersChart" width="60" height="60"></canvas>
+    </div>
+
+    <div id="usersChartContainer">
+        <canvas id="users" width="60" height="60"></canvas>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var ctx = document.getElementById('productChart').getContext('2d');
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '{{ path('data_chart') }}', true);
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            try {
+                var responseData = JSON.parse(xhr.responseText);
+                console.log('Product count:', responseData.productsCount);
+                var productsCount = responseData.productsCount;
+                var productChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Products'],
+                        datasets: [{
+                            label: 'Product Count',
+                            data: [productsCount],
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error parsing JSON response:', error);
+            }
+        } else {
+            console.error('Failed to load data. Status code:', xhr.status);
+        }
+    };
+    xhr.send();
+});
+
+
+ document.addEventListener("DOMContentLoaded", function() {
+    var ctx = document.getElementById('ordersChart').getContext('2d');
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '{{ path('data_chart') }}', true);
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            try {
+                var responseData = JSON.parse(xhr.responseText);
+                console.log('orders Count:', responseData.productsCount);
+                var orderCount = responseData.orderCount;
+                var productChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Orders'],
+                        datasets: [{
+                            label: 'orders Count',
+                            data: [orderCount],
+                            backgroundColor: 'rgba(245, 40, 145, 0.8)',
+                            borderColor: 'rgba(245, 40, 145, 0.8)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error parsing JSON response:', error);
+            }
+        } else {
+            console.error('Failed to load data. Status code:', xhr.status);
+        }
+    };
+    xhr.send();
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    var ctx = document.getElementById('users').getContext('2d');
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '{{ path('data_chart') }}', true);
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            try {
+                var responseData = JSON.parse(xhr.responseText);
+                console.log('Data:', responseData);
+                var userCount = responseData.userCount;
+                var adminCount = responseData.adminCount;
+                var usersChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Users', 'Admins'],
+                        datasets: [{
+                            label: 'Count',
+                            data: [userCount, adminCount],
+                            backgroundColor: [
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 99, 132, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 99, 132, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error parsing JSON response:', error);
+            }
+        } else {
+            console.error('Failed to load data. Status code:', xhr.status);
+        }
+    };
+    xhr.send();
+});
+
+
+    </script>
+</body>
+</html>
+{% endblock %}
