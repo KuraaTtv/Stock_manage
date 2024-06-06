@@ -23,7 +23,6 @@ class ClientController extends AbstractController
         $products = [];
         foreach($cart as $id=>$quntity){
         $product = $productRepository->find($id);
-
         if($product){
             $product->StockQu = $quntity;
             $products[]=$product;
@@ -34,18 +33,28 @@ class ClientController extends AbstractController
         ]);
     }
 
-    #[Route('/cart/add/{id}', name: 'cart_add')]
+    #[Route('/cart/{id}/add', name: 'cart_add')]
     public function add(int $id, SessionInterface $session): Response
     {
         $cart = $session->get('cart', []);
-        if (isset($cart[$id])) {
-            $cart[$id]++;
-            
-        } else {
+        if (!isset($cart[$id])) {
             $cart[$id] = 1;
+        } else {
+            $cart[$id]++;
         }
         $session->set('cart', $cart);
-    
+        return $this->redirectToRoute('app_cart');
+    }
+    #[Route('/cart/{id}/remove' , name:'cart_remove')]
+    public function remove(SessionInterface $session,int $id){
+        $cart = $session->get('cart', []);
+        if(isset($cart[$id])){
+            unset($cart[$id]);
+            $session->set('cart',$cart);
+            // $this->addFlash('success', 'Item removed from cart successfully.');
+            // return $this->redirectToRoute('app_test');
+            // return $this->redirectToRoute('cart');
+        }
         return $this->redirectToRoute('app_cart');
     }
 

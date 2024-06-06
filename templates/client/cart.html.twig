@@ -1,79 +1,97 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<link rel="stylesheet" href="{{asset('../styles/style.css')}}"/>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container py-5">
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-md-9">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <span class="pull-right">(<strong>{{ products|length }}</strong>) items</span>
-                        <h5>Items in your cart</h5>
-                    </div>
-                    {% set totale = 0 %}
-                    {% for product in products %}
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table shoping-cart-table">
-                                    <tbody>
-                                    <tr>
-                                        <td width="90">
-                                            <div class="cart-product-imitation">
-                                                <img src="{{ asset('uploads/'~ product.picture) }}"/>
-                                            </div>
-                                        </td>
-                                        <td class="desc">
-                                            <h3>
-                                                <a href="#" class="text-navy">
-                                                   {{product.name}}
-                                                </a>
-                                            </h3>
-                                            <p class="small">
-                                            {{product.description}}
-                                            </p>
+<style>
+  body{
+    margin-top:20px;
+    background:#eee;
+}
+.ui-w-40 {
+    width: 40px !important;
+    height: auto;
+}
 
-                                            <div class="m-t-sm">
-                                                <a href="#" class="btn btn-danger"><i class="fa fa-trash"></i> Remove item</a>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <h4>
-                                               Your Quntity: {{product.StockQu}}<br/>
-                                                Price : {{product.price}}
-                                            </h4>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                            {% set totale = totale + (product.price * product.StockQu)  %}
-                    {% endfor %}
-                    
-                    <div class="ibox-content">
-                        <button class="btn btn-primary pull-right"><i class="fa fa fa-shopping-cart"></i> Checkout</button>
-                        <button class="btn btn-white"><i class="fa fa-arrow-left"></i> Continue shopping</button>
+.card{
+    box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);    
+}
 
+.ui-product-color {
+    display: inline-block;
+    overflow: hidden;
+    margin: .144em;
+    width: .875rem;
+    height: .875rem;
+    border-radius: 10rem;
+    -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
+    vertical-align: middle;
+}
+</style>
+<div class="container px-3 my-5 clearfix">
+  {% if products|length == 0  %}
+        <h2 class="text-center">There is no product ordered</h2>
+  {% else %}
+  <div class="card">
+      <div class="card-header">
+        
+          <h2>Shopping Cart ({{products|length}})</h2>
+      </div>
+      <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered m-0">
+              <thead>
+                <tr>
+                  <!-- Set columns width -->
+                  <th class="text-center py-3 px-4 fs-4" style="min-width: 400px;">Product Name &amp; Details</th>
+                  <th class="text-right py-3 px-4 fs-4" style="width: 100px;">Price</th>
+                  <th class="text-center py-3 px-4 fs-4" style="width: 120px;">Quantity</th>
+                  <th class="text-right py-3 px-4 fs-4" style="width: 100px;">Total</th>
+                  <th class="text-center align-middle py-3 px-0 fs-4" style="width: 40px;">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% set totale = 0 %}
+                {% for product in products %}
+                <tr>
+                  <td class="p-4">
+                    <div class="media align-items-center">
+                      <img src="{{ asset('uploads/'~ product.picture) }}" class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                      <div class="media-body">
+                        <p href="#" class="d-block text-dark fs-4">{{product.name}}</p>
+                        <small>
+                          <span class="text-muted fs-5">{{product.description}}</span>
+                          
+                        </small>
+                      </div>
                     </div>
-                </div>
-
-            </div>
-            <div class="col-md-3">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>Cart Summary</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <span>
-                            {{totale}}
-                        </span>
-                        <h2 class="font-bold">
-                        </h2>
-                    </div>
-                </div>
-            </div>
+                  </td>
+                  <td class="text-center font-weight-semibold align-middle p-4">{{product.price}}</td>
+                  <td class="text-center font-weight-semibold align-middle p-4">{{product.StockQu}}</td>
+                  <td class="text-center font-weight-semibold align-middle p-4">{{product.price * product.StockQu}} $</td>
+                  
+                  <td class="text-center align-middle px-0"><a href="{{ path('cart_remove', { 'id': product.id }) }}" class="text-danger"><i class="fas fa-trash fa-lg"></i></a></a></td>
+                </tr>
+                {% set totale = totale + (product.price * product.StockQu)  %}
+                {% endfor %}
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <label class="fs-5 font-weight-normal m-0">{{totale}} $</label>
+                  </td>
+                  <td><label class="fs-5 font-weight-normal m-0">Total price</label></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="text-center">
+            <a type="button" href="{{path('app_test')}}" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3 text-decoration-underline">Back to shopping</button>
+            <a class="btn btn-primary  md-btn-flat mt-2 mr-3" href="{{path('app_order')}}"><i class="fa fa fa-shopping-cart"></i> Place Order</a>
+          </div>
         </div>
     </div>
+    {% endif %}
 </div>
+
+
 {% endblock %}

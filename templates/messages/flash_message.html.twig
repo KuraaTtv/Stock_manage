@@ -1,4 +1,4 @@
-{% for label, messages in app.flashes %}
+ {# {% for label, messages in app.flashes %}
     {% if label == 'success' %}
         <div class="alert alert-success alert-dismissible fade show role="alert"">
             {% for message in messages %}
@@ -7,14 +7,18 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
 </div>
-    {% elseif label == 'error' %}
-        <div class="alert alert-danger alert-dismissible fade show">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
-            <button type="button" class="btn-close" data-bs-dismiss="alert role="alert""></button>
-        </div>
-    {% endif %}
+{% endif %}
+{% endfor %} #}
+
+
+{% for label, messages in app.flashes %}
+    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+        {% for message in messages %}
+            <p class="fs-4 mb-0">{{ message }}</p>
+        {% endfor %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 {% endfor %}
+
 
 

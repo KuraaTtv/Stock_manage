@@ -95,7 +95,7 @@
                         <div class="d-flex justify-content-between mb-2">
                             <p class="text-muted mb-0">Available: <span class="fw-bold">{{product.getStockQu()}}</span></p>
                             <div class="ms-auto text-warning">
-                                <a type="button" class="btn btn-info" href="{{ path('app_cart', {id:product.id}) }}">
+                                <a type="button" class="btn btn-info" href="{{path('cart_add',{id:product.id})}}">
                                     <div class="pretext">
                                         <i class="fa-solid fa-cart-shopping"></i> ADD TO CART
                                     </div>
@@ -109,58 +109,6 @@
         </div>
     </div>
 </section>
-            <!-- Filtre  -->
-            <!-- QueryBulider inner join and call and give the id for the category name -->
-            <div class="wrapper">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="text-center m-2">AVAILABE PRODUCTS</h1>
-                    <div class="d-flex align-items-center">
-                        <button type="button" class="btn btn-success">
-                            Product 4
-                          </button>
-                    </div>
-                </div>
-            
-                <div class="filter-section d-flex justify-content-between align-items-center bg-white p-2">
-                    <div>
-                        <label class="mr-2">Most Popular <input type="radio" name="filter" checked></label>
-                        <label>Cheapest <input type="radio" name="filter"></label>
-                    </div>
-                    <div>
-                        <label class="m-2">Farm <input type="checkbox" checked></label>
-                        <label class="m-2">Bio <input type="checkbox"></label>
-                        <label class="m-2">Czech Republic <input type="checkbox"></label>
-                    </div>
-                </div>
-            
-                <div class="row">
-                    <!-- Product Card -->
-                    <div class="col-md-4 col-sm-6 product-card">
-                        <div class="card">
-                            <img src="https://www.freepnglogos.com/uploads/cucumber-png/cucumber-png-image-purepng-transparent-png-26.png" class="card-img-top" alt="Product Image">
-                            <div class="card-body">
-                                <h6 class="card-title">Product Title</h6>
-                                <p class="card-text text-muted">Small product description.</p>
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="far fa-star text-warning"></i>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div>
-                                        <h6 class="mb-0 font-weight-bold">36.99 USD</h6>
-                                        <small class="text-muted"><s>48.56</s></small>
-                                    </div>
-                                    <button class="btn btn-primary">Buy Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Repeat Product Card for more products -->
-                </div>
-            </div>
             
 
 
