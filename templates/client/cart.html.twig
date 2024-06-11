@@ -1,97 +1,89 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <style>
-  body{
-    margin-top:20px;
-    background:#eee;
-}
-.ui-w-40 {
-    width: 40px !important;
-    height: auto;
-}
-
-.card{
-    box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);    
-}
-
-.ui-product-color {
-    display: inline-block;
-    overflow: hidden;
-    margin: .144em;
-    width: .875rem;
-    height: .875rem;
-    border-radius: 10rem;
-    -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.15) inset;
-    vertical-align: middle;
-}
+body{background-color: #eeeeee;font-family: 'Open Sans',serif;font-size: 14px}.container-fluid{margin-top:70px}.card-body{-ms-flex: 1 1 auto;flex: 1 1 auto;padding: 1.40rem}.img-sm{width: 80px;height: 80px}.itemside .info{padding-left: 15px;padding-right: 7px}.table-shopping-cart .price-wrap{line-height: 1.2}.table-shopping-cart .price{font-weight: bold;margin-right: 5px;display: block}.text-muted{color: #969696 !important}a{text-decoration: none !important}.card{position: relative;display: -ms-flexbox;display: flex;-ms-flex-direction: column;flex-direction: column;min-width: 0;word-wrap: break-word;background-color: #fff;background-clip: border-box;border: 1px solid rgba(0,0,0,.125);border-radius: 0px}.itemside{position: relative;display: -webkit-box;display: -ms-flexbox;display: flex;width: 100%}.dlist-align{display: -webkit-box;display: -ms-flexbox;display: flex}[class*="dlist-"]{margin-bottom: 5px}.coupon{border-radius: 1px}.price{font-weight: 600;color: #212529}.btn.btn-out{outline: 1px solid #fff;outline-offset: -5px}.btn-main{border-radius: 2px;text-transform: capitalize;font-size: 15px;padding: 10px 19px;cursor: pointer;color: #fff;width: 100%}.btn-light{color: #ffffff;background-color: #F44336;border-color: #f8f9fa;font-size: 12px}.btn-light:hover{color: #ffffff;background-color: #F44336;border-color: #F44336}.btn-apply{font-size: 11px}
 </style>
-<div class="container px-3 my-5 clearfix">
-  {% if products|length == 0  %}
-        <h2 class="text-center">There is no product ordered</h2>
-  {% else %}
-  <div class="card">
-      <div class="card-header">
-        
-          <h2>Shopping Cart ({{products|length}})</h2>
-      </div>
-      <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered m-0">
-              <thead>
-                <tr>
-                  <!-- Set columns width -->
-                  <th class="text-center py-3 px-4 fs-4" style="min-width: 400px;">Product Name &amp; Details</th>
-                  <th class="text-right py-3 px-4 fs-4" style="width: 100px;">Price</th>
-                  <th class="text-center py-3 px-4 fs-4" style="width: 120px;">Quantity</th>
-                  <th class="text-right py-3 px-4 fs-4" style="width: 100px;">Total</th>
-                  <th class="text-center align-middle py-3 px-0 fs-4" style="width: 40px;">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% set totale = 0 %}
-                {% for product in products %}
-                <tr>
-                  <td class="p-4">
-                    <div class="media align-items-center">
-                      <img src="{{ asset('uploads/'~ product.picture) }}" class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                      <div class="media-body">
-                        <p href="#" class="d-block text-dark fs-4">{{product.name}}</p>
-                        <small>
-                          <span class="text-muted fs-5">{{product.description}}</span>
-                          
-                        </small>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="text-center font-weight-semibold align-middle p-4">{{product.price}}</td>
-                  <td class="text-center font-weight-semibold align-middle p-4">{{product.StockQu}}</td>
-                  <td class="text-center font-weight-semibold align-middle p-4">{{product.price * product.StockQu}} $</td>
-                  
-                  <td class="text-center align-middle px-0"><a href="{{ path('cart_remove', { 'id': product.id }) }}" class="text-danger"><i class="fas fa-trash fa-lg"></i></a></a></td>
-                </tr>
-                {% set totale = totale + (product.price * product.StockQu)  %}
-                {% endfor %}
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <label class="fs-5 font-weight-normal m-0">{{totale}} $</label>
-                  </td>
-                  <td><label class="fs-5 font-weight-normal m-0">Total price</label></td>
-                </tr>
-              </tbody>
-            </table>
+
+
+<div class="container-fluid">
+{% if products|length == 0  %}
+  <h2 class="text-center">There is no product ordered</h2>
+{% else %}
+  <div class="row">
+    <h2>Shopping Cart ({{products|length}})item(s)</h2>
+      <aside class="col-lg-9">
+          <div class="card">
+              <div class="table-responsive">
+                  <table class="table table-borderless table-shopping-cart">
+                      <thead class="text-muted">
+                          <tr class="small text-uppercase">
+                              <th scope="col">Product</th>
+                              <th scope="col" width="120">Quantity</th>
+                              <th scope="col" width="120">Price</th>
+                              <th scope="col" class="text-right d-none d-md-block" width="200"></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% if products|length == 0 %}
+                              <tr>
+                                  <td colspan="4" class="text-center">There is no products in the cart </td>
+                              </tr>
+                          {% else %}
+                          {% set totale = 0 %}
+                              {% for product in products %}
+                                  <tr>
+                                      <td>
+                                          <figure class="itemside align-items-center">
+                                              <div class="aside"><img src="{{ asset('uploads/' ~ product.picture) }}" class="rounded img-fluid img-thumbnail"></div>
+                                              <figcaption class="info">
+                                                  <a href="#" class="title text-dark fs-4" data-abc="true">{{ product.name }}</a>
+                                              </figcaption>
+                                          </figure>
+                                      </td>
+                                      <td>
+                                          <select class="form-control" disabled  style="color: black; text-align: center;">
+                                                  <option>{{product.StockQu}}</option>
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <div class="price-wrap">
+                                              <var class="price">${{ product.price }}</var>
+                                              <small class="text-muted">${{ product.price * product.StockQu }} each</small>
+                                          </div>
+                                      </td>
+                                      <td class="text-right d-none d-md-block">
+                                        <a href="{{ path('cart_remove', { 'id': product.id }) }}" class="btn btn-light btn-round" data-abc="true" onclick="return confirm('Are you sure you want to delete this item?')">Remove</a>
+                                          
+                                      </td>
+                                  </tr>
+
+                                  {% set totale = totale + (product.price * product.StockQu)  %}
+                              {% endfor %}
+                          {% endif %}
+                      </tbody>
+                  </table>
+              </div>
           </div>
-          <div class="text-center">
-            <a type="button" href="{{path('app_test')}}" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3 text-decoration-underline">Back to shopping</button>
-            <a class="btn btn-primary  md-btn-flat mt-2 mr-3" href="{{path('app_order')}}"><i class="fa fa fa-shopping-cart"></i> Place Order</a>
+      </aside>
+      <aside class="col-lg-3">
+          <div class="card mb-3">
           </div>
-        </div>
-    </div>
-    {% endif %}
+          <div class="card">
+              <div class="card-body">
+                  <dl class="dlist-align">
+                      <dt class="fs-5">Total price: </dt>
+                      <dd class="text-right ml-3 fs-5">${{ totale }}</dd>
+                  </dl>
+                  <hr>
+                  <a href="{{path('app_orders')}}" class="btn btn-out btn-primary btn-main" data-abc="true">Make Purchase</a>
+                  <a href="{{path('app_test')}}" class="btn btn-out btn-success btn-main mt-2" data-abc="true">Continue Shopping</a>
+              </div>
+          </div>
+      </aside>
+  </div>
+  {% endif %}
 </div>
+
 
 
 {% endblock %}

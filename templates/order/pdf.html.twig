@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>The Orders Lists</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Order Date</th>
+                <th>User Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for Data in DateOrder %}
+                <tr>
+                    <td>{{ Data.id }}</td>
+                    <td>{{ Data.FirstName }}</td>
+                    <td>{{ Data.LastName }}</td>
+                    <td>{{ Data.Adresse }}</td>
+                    <td>{{ Data.Phone }}</td>
+                    <td>{{ Data.OrderDate|date('Y-m-d') }}</td>
+                    {% if Data.userId is not null %}
+                        <td>{{ Data.userId.email }}</td>
+                    {% else %}
+                        <td>No user associated</td>
+                    {% endif %}
+                    {# Add actions if needed #}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+
+</body>
+</html>

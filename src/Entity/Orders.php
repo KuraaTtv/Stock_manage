@@ -35,8 +35,12 @@ class Orders
      * @var Collection<int, OrderItems>
      */
     // important 
-    #[ORM\OneToMany(targetEntity: OrderItems::class, mappedBy: 'OrderId' , cascade:['persist'])]
+    #[ORM\OneToMany(targetEntity: OrderItems::class, mappedBy: 'OrderId' , cascade:['persist','remove'], orphanRemoval: true)]
+    
     private Collection $orderItems;
+
+    #[ORM\ManyToOne(inversedBy: 'userId')]
+    private ?User $userId = null;
 
     public function __construct()
     {
@@ -134,6 +138,18 @@ class Orders
                 $orderItem->setOrderId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(?User $userId): static
+    {
+        $this->userId = $userId;
 
         return $this;
     }

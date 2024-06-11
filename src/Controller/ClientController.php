@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\session;
 
 class ClientController extends AbstractController
 {
-    #[Route('/cart', name: 'app_cart')]
+    #[Route('/user/cart', name: 'app_cart')]
     public function index(SessionInterface $session,ProductRepository $productRepository): Response
     {
         $cart = $session->get('cart', []);
@@ -33,7 +33,7 @@ class ClientController extends AbstractController
         ]);
     }
 
-    #[Route('/cart/{id}/add', name: 'cart_add')]
+    #[Route('/user/cart/{id}/add', name: 'cart_add')]
     public function add(int $id, SessionInterface $session): Response
     {
         $cart = $session->get('cart', []);
@@ -45,15 +45,14 @@ class ClientController extends AbstractController
         $session->set('cart', $cart);
         return $this->redirectToRoute('app_cart');
     }
-    #[Route('/cart/{id}/remove' , name:'cart_remove')]
+    #[Route('/user/cart/{id}/remove' , name:'cart_remove')]
     public function remove(SessionInterface $session,int $id){
         $cart = $session->get('cart', []);
         if(isset($cart[$id])){
             unset($cart[$id]);
             $session->set('cart',$cart);
-            // $this->addFlash('success', 'Item removed from cart successfully.');
-            // return $this->redirectToRoute('app_test');
-            // return $this->redirectToRoute('cart');
+            $this->addFlash('success', 'Item(s) removed from cart successfully.');
+            return $this->redirectToRoute('app_test');
         }
         return $this->redirectToRoute('app_cart');
     }

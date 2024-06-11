@@ -5,9 +5,11 @@ namespace App\Form;
 use App\Entity\Product;
 use App\Entity\Category;
 // use Webmozart\Assert\Assert;
+use Assert\ImageValidator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -54,13 +56,15 @@ class ProductType extends AbstractType
         ])
         ->add('picture', FileType::class, [
             'label' => 'Product picture',
-            'constraints' => [
-                new Assert\File([
-                    'maxSize' => '2M',
-                    'mimeTypes' => ['image/jpeg', 'image/png'],
-                    'mimeTypesMessage' => 'Please upload a valid image (JPEG or PNG).',
-                ]),
-            ],
+            'mapped' => true,
+            // 'constraints' => [
+            //     new Assert\Image([
+            //             'minWidth' => 320,
+            //             'minHeight' => 213,
+            //             'minWidthMessage' => 'Image width must be at least 320 pixels.',
+            //             'minHeightMessage' => 'Image height must be at least 213 pixels.',
+            //     ]),
+            // ],
             'data_class' => null
         ])
         ->add('description', TextareaType::class, [

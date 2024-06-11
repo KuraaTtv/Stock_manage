@@ -18,13 +18,17 @@ services:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
+            - '../src/Entity/' 
             - '../src/Kernel.php'
             - '../src/twig/Extension/'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     # ModelesController
+    App\Entity\Payment: ~
+    App\Entity\Orders: ~
+
+    # App\Service\PdfService: ~
    
     App\Twig\Extension\AppExtension:
         arguments:

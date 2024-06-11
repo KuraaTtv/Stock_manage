@@ -1,7 +1,6 @@
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top bg-light navbar-light">
   <div class="container">
-    <a class="navbar-brand" href="#">Stock Manage</a>
+    <a class="navbar-brand" href="{{path('app_test')}}">Stock Manage</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -23,7 +22,7 @@
         {% endif %}
         {% endfor %}
         <li class="nav-item dropdown d-none d-lg-block user-dropdown">
-          <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link" id="UserDropdown" href="" data-bs-toggle="dropdown" aria-expanded="false">
             <img class="img-xs rounded-circle" src="{{asset('image/user.png')}}" alt="Profile image"> </a>
           <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
             <div class="dropdown-header text-center">
@@ -45,13 +44,11 @@
 </nav>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    // Initialize all input of type date
-    var toggler = document.querySelector('.navbar-toggler');
-    var collapse = document.querySelector('#navbarSupportedContent');
+    let toggler = document.querySelector('.navbar-toggler');
+    let collapse = document.querySelector('#navbarSupportedContent');
 
     toggler.addEventListener('click', function () {
       collapse.classList.toggle('show');
     });
   });
 </script>
-<!-- Navbar -->

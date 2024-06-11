@@ -77,5 +77,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ->getQuery()
         ->getSingleScalarResult();
     }
+
+    public function LastUsers(){
+        return $this->createQueryBuilder('u')
+        ->where("u.roles NOT LIKE '%ROLE_ADMIN%'")
+        ->orderBy('u.id', 'DESC')
+        ->setMaxResults(3)
+        ->getQuery()
+        ->getResult();
+    }
 }
 

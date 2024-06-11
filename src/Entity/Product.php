@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -43,7 +44,7 @@ class Product
     /**
      * @var Collection<int, OrderItems>
      */
-    #[ORM\OneToMany(targetEntity: OrderItems::class, mappedBy: 'Prod_id')]
+    #[ORM\OneToMany(targetEntity: OrderItems::class, mappedBy: 'Prod_id',cascade: ["remove"])]
     private Collection $Prod_id;
 
     public function __construct()

@@ -14,6 +14,7 @@ use App\Repository\ModelsRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\OrderItemsRepository;
 use App\Repository\OrdersRepository;
+use App\Repository\PaymentRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -29,14 +30,19 @@ class TestController extends AbstractController
     
 
     #[Route('/dashboard', name: 'app_test')]
-    public function index(UserRepository $userRepository,ProductRepository $productRepository): Response
+    public function index(UserRepository $userRepository,ProductRepository 
+    $productRepository,OrderItemsRepository $orderItemsRepository,OrdersRepository $ordersRepository,PaymentRepository $paymentRepository): Response
     { 
         $users = $userRepository->HowMuchUser();
         $admins = $userRepository->HowUserAdmin();
         $all_user = $userRepository->findAll();
         $products = $productRepository->count();
         $pro = $productRepository->findAll();
-
+        $productsData = $productRepository->ProductOrder(10);
+        $OrderItems = $orderItemsRepository->count();
+        $Orders = $ordersRepository->count();
+        $payemnt =$paymentRepository->count();
+        $lastusers  = $userRepository->LastUsers();
         if(!$this->IsGranted('ROLE_ADMIN')){
             return $this->render('client/index.html.twig' ,[
                 'products' =>$pro
@@ -46,7 +52,12 @@ class TestController extends AbstractController
             'users'=>$users,
             'admin'=>$admins,
             'all_user'=>$all_user,
-            'products'=>$products
+            'products'=>$products,
+            'productsData'=>$productsData,
+            'Orders'=>$Orders,
+            'OrderItems'=>$OrderItems,
+            'payemnt'=>$payemnt,
+            'lastusers'=>$lastusers
         ]);
     
     }
@@ -113,8 +124,8 @@ class TestController extends AbstractController
                 'id' => $category->getId(),
                 'Name' => $category->getName(),
                 'Description' => $category->getDescription(),
-                'actions' => '<a href="/category/'.$category->getId().'/edit" class="btn btn-info mb-2">Edit</a>
-                             <a href="/category/'.$category->getId().'/delete" class="btn btn-danger mb-2" onclick="return confirm(\'Are you sure you want to delete this category?\')">Delete</a>'
+                'actions' => '<a href="/admin/category/'.$category->getId().'/edit" class="btn btn-info mb-2">Edit</a>
+                             <a href="/admin/category/'.$category->getId().'/delete" class="btn btn-danger mb-2" onclick="return confirm(\'Are you sure you want to delete this category?\')">Delete</a>'
                 ];
         }
         return new JsonResponse([
@@ -123,11 +134,7 @@ class TestController extends AbstractController
             'recordsFiltered' => $totalRecords,
             'data' => $formattedData,
         ]);
-    }
-
-    // chart js
-
-    
+    }    
     #[Route('/Data',name :'data_chart')]
     public function ShowChart(ProductRepository $productRepository,OrdersRepository $ordersRepository,UserRepository $userRepository,OrderItemsRepository $orderItemsRepository){
         $productsCount = $productRepository->count();
@@ -135,24 +142,20 @@ class TestController extends AbstractController
         $orderItems = $orderItemsRepository->count();
         $UserCount = $userRepository->count();
         $RoleAdmin = $userRepository->HowUserAdmin();
+        $productsData = $productRepository->ProductOrder(3);
         return $this->json([
             'productsCount' => $productsCount,
             'orderCount'=>$orderCount,
             'userCount' =>$UserCount,
             'RoleAdmin'=>$RoleAdmin,
-            'orderItems'=>$orderItems
+            'orderItems'=>$orderItems,
+            'productsData'=>$productsData
         ]);
     }
-    #[Route('/Charts',name :'app_chart')]
+    #[Route('/admin/Charts',name :'app_chart')]
     public function Chart (){
         return $this->render('Admin/Chart.html.twig');
     }
-
-    
-
-
-
-    
     
 }
 

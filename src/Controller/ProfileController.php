@@ -55,7 +55,7 @@ class ProfileController extends AbstractController
             'ProfilForm' => $ProfilForm->createView(),
         ]);
     }
-#[Route('/profils', name:'users_profil')]
+#[Route('/admin/profils', name:'users_profil')]
 public function profils(){
     return $this->render('profile/users.html.twig');
 }
@@ -111,10 +111,8 @@ public function profils(){
                 'data' => $UserData,
             ]);
     }
-    // if(!$currentuser){}
-    // elseif($currentuser){}
 
-    #[Route('profile/{id}/edit', name:'user_edit')]
+    #[Route('/admin/profile/{id}/edit', name:'user_edit')]
     public function editUser(User $user, EntityManagerInterface $entityManagerInterface, Request $request){
         // try{
             $editFormMod = $this->createForm(EditFormType::class, $user);
@@ -129,7 +127,7 @@ public function profils(){
                 'form' => $editFormMod->createView()
             ]);
         }
-        #[Route('profile/{id}/delete',name:'delete_user')]
+        #[Route('/admin/profile/{id}/delete',name:'delete_user')]
         public function delete (EntityManagerInterface $entityManagerInterface,User $user){
           $entityManagerInterface->remove($user);
           $entityManagerInterface->flush();

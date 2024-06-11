@@ -10,15 +10,28 @@
 {% endif %}
 {% endfor %} #}
 
-
 {% for label, messages in app.flashes %}
-    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
-        {% for message in messages %}
-            <p class="fs-4 mb-0">{{ message }}</p>
-        {% endfor %}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="alert alert-dismissible fade show alert-{{ label }}" role="alert">
+  <div class="alert-content d-flex align-items-center justify-content-between">
+    <div class="alert-message">
+      {% if label == 'success' %}
+        <i class="fas fa-check-circle text-success"></i>
+      {% elseif label == 'danger' %}
+        <i class="fas fa-exclamation-circle text-danger"></i>
+      {% elseif label == 'warning' %}
+        <i class="fas fa-exclamation-triangle text-warning"></i>
+      {% else %}
+        <i class="fas fa-info-circle text-info"></i>
+      {% endif %}
+      {% for  message in messages  %}
+      <span class="ml-2">{{ message }}</span>
+      {% endfor %}
     </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>
 {% endfor %}
+
 
 
 

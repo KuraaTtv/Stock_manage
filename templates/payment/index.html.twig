@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<style>
+.payment-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.payment-form {
+    width: calc(50% - 20px);
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.invoice {
+    width: calc(50% - 20px);
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.payment-header h2 {
+    margin-bottom: 10px;
+}
+
+.payment-header p {
+    margin-bottom: 20px;
+}
+
+.payment-methods h3 {
+    margin-top: 0;
+}
+
+.payment-options {
+    margin-bottom: 20px;
+}
+
+.card-details h3 {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.invoice-header h2 {
+    margin-bottom: 10px;
+}
+
+.invoice-details p {
+    margin: 5px 0;
+}
+
+.invoice-items .item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.invoice-total p {
+    margin: 5px 0;
+}
+
+.invoice-footer {
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Form styling */
+.form-control {
+    border-radius: 4px;
+}
+
+.btn-primary {
+    border-radius: 4px;
+    padding: 10px 20px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .payment-container {
+        flex-direction: column;
+    }
+    
+    .payment-form,
+    .invoice {
+        width: 100%;
+    }
+}
+
+</style>
+<div class="payment-container">
+    <div class="payment-form">
+        <div class="payment-header">
+            <h2>Payment Information</h2>
+            <p>Please select your payment method and fill in your card details below.</p>
+        </div>
+        <div class="payment-methods">
+            <h3>Select Payment Method</h3>
+            <form action="" method="POST">
+                {{ form_start(form) }}
+                <div class="payment-options">
+                    <div class="payment-option">
+                        {{ form_widget(form.PaymentMethode, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="card-details">
+                    <h3>Card Details</h3>
+                    <div class="form-group">
+                    <label for="ccName">Card Owner</label>
+                       {{ form_widget(form.CardOwner, {'attr': {'class': 'form-control', 'placeholder': 'Cardholder Name'}, 'value': CardOwner  ~ ' ' ~ CardOwnerLast}) }}
+                    </div>
+                    <div class="form-group">
+                    <label for="ccName">Card Number</label>
+                        {{ form_widget(form.CardNumber, {'attr': {'class': 'form-control', 'placeholder': 'Card Number'}}) }}
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                        <label for="ccName">Expiration Date</label>
+                            {{ form_widget(form.ExpirationDate, {'attr': {'class': 'form-control', 'placeholder': 'Expiration Date'}}) }}
+                        </div>
+                        <div class="form-group col-md-6">
+                        <label for="ccName">CVV</label>
+                            {{ form_widget(form.Cvv, {'attr': {'class': 'form-control', 'placeholder': 'CVV'}}) }}
+                        </div>
+                        <div class="form-group">
+                          <label for="ccName">Payment Amount</label>
+                          {{ form_widget(form.PaymentAmount, {'attr': {'class': 'form-control', 'placeholder': 'Cardholder Name','readonly': 'readonly'}, 'value': totalAmount}) }}
+                          
+                        </div>
+                      
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Pay Now</button>
+                {{ form_end(form) }}
+            </form>
+        </div>
+    </div>
+  <div class="invoice">
+    <div class="invoice-header">
+        <h2>Invoice</h2>
+        <div class="invoice-details">
+            <p><strong>Invoice Number:</strong> SN8478042099</p>
+            <p><strong>Order Number: {{id}}</strong></p>
+            <p><strong>Date:</strong> {{ "now"|date("m/d/Y") }}</p>
+        </div>
+    </div>
+    <div class="invoice-body">
+        <div class="invoice-items">
+            {% set total = 0 %}
+            {% for product in products %}
+            <div class="item">
+                <p><strong>{{ product.name }}</strong></p>
+                <p>Quantity: {{ product.StockQu }}</p>
+                <p>Price: {{ product.price }}</p>
+                <p>Total: {{ product.price * product.StockQu }}</p>
+            </div>
+            {% set total = total + (product.price * product.StockQu) %}
+            {% endfor %}
+        </div>
+        <div class="invoice-total">
+            <p><strong>Total</strong>: {{ total }}$</p>
+        </div>
+    </div>
+    <div class="invoice-footer">
+        <p>Thank you for your business!</p>
+        <p>For any inquiries, contact our customer support.</p>
+    </div>
+</div>
+
+</div>
+
+
+{% endblock %}

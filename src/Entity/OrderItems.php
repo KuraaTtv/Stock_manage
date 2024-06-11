@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\OrderItemsRepository;
@@ -18,12 +17,12 @@ class OrderItems
 
     #[ORM\Column]
     private ?int $Total = null;
-// important 
-    #[ORM\ManyToOne(inversedBy: 'orderItems' , cascade:['persist'])]
+
+    #[ORM\ManyToOne(inversedBy: 'orderItems' , cascade:['persist','remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Orders $OrderId = null;
-
-    #[ORM\ManyToOne(inversedBy: 'Prod_id')]
+// when Delete product 
+    #[ORM\ManyToOne(inversedBy: 'orderItems', cascade: ["remove"])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $Prod_id = null;
 

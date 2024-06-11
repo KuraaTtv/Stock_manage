@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+#[Route('/admin')]
 
 class ModelesController extends AbstractController
 {
@@ -61,8 +62,8 @@ class ModelesController extends AbstractController
                     'icon'=>$model->getIcon(),
                     'role'=>$model->getRole(),
                     'title'=>$model->getTitle(),
-                    'actions' => '<a href="/model/'.$model->getId().'/edit" class="btn btn-info mb-2">Edit</a>
-                                 <a href="/model/'.$model->getId().'/delete" class="btn btn-danger mb-2" onclick="return confirm(\'Are you sure you want to delete this modele?\')">Delete</a>'
+                    'actions' => '<a href="/admin/model/'.$model->getId().'/edit" class="btn btn-info mb-2">Edit</a>
+                                 <a href="/admin/model/'.$model->getId().'/delete" class="btn btn-danger mb-2" onclick="return confirm(\'Are you sure you want to delete this modele?\')">Delete</a>'
     
     
                     ];

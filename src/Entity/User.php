@@ -42,9 +42,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Models::class, inversedBy: 'user_role')]
     private Collection $Models;
 
+    /**
+     * @var Collection<int, Payment>
+     */
+    #[ORM\OneToMany(targetEntity: Payment::class, mappedBy: 'userId')]
+    private Collection $userid;
+
+    /**
+     * @var Collection<int, Orders>
+     */
+    #[ORM\OneToMany(targetEntity: Orders::class, mappedBy: 'userId')]
+    private Collection $userId;
+
     public function __construct()
     {
         $this->Models = new ArrayCollection();
+        $this->userid = new ArrayCollection();
+        $this->userId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,6 +157,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeModel(Models $model): static
     {
         $this->Models->removeElement($model);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Payment>
+     */
+    public function getUserid(): Collection
+    {
+        return $this->userid;
+    }
+
+    public function addUserid(Payment $userid): static
+    {
+        if (!$this->userid->contains($userid)) {
+            $this->userid->add($userid);
+            $userid->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserid(Payment $userid): static
+    {
+        if ($this->userid->removeElement($userid)) {
+            // set the owning side to null (unless already changed)
+            if ($userid->getUserId() === $this) {
+                $userid->setUserId(null);
+            }
+        }
 
         return $this;
     }
